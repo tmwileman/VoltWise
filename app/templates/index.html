@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltWise - Battery Optimization</title>
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- JavaScript dependencies -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">VoltWise</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Control Panel -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Battery Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="batteryForm">
+                            <div class="mb-3">
+                                <label for="capacity" class="form-label">Battery Capacity (MWh)</label>
+                                <input type="number" class="form-control" id="capacity" value="100">
+                            </div>
+                            <div class="mb-3">
+                                <label for="power" class="form-label">Max Power (MW)</label>
+                                <input type="number" class="form-control" id="power" value="20">
+                            </div>
+                            <div class="mb-3">
+                                <label for="soc" class="form-label">Initial State of Charge (%)</label>
+                                <input type="number" class="form-control" id="soc" value="50">
+                            </div>
+                            <div class="mb-3">
+                                <label for="scenario" class="form-label">Price Scenario</label>
+                                <select class="form-select" id="scenario">
+                                    <option value="normal">Normal Day</option>
+                                    <option value="volatile">High Volatility</option>
+                                    <option value="high_peaks">Price Spikes</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Run Optimization</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Results Summary -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Results Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="results">
+                            <p><strong>Total Profit:</strong> <span id="totalProfit">-</span></p>
+                            <p><strong>Energy Charged:</strong> <span id="energyCharged">-</span></p>
+                            <p><strong>Energy Discharged:</strong> <span id="energyDischarged">-</span></p>
+                            <p><strong>Final SoC:</strong> <span id="finalSoc">-</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Optimization Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="priceChart" class="chart-container mb-4"></div>
+                        <div id="powerChart" class="chart-container mb-4"></div>
+                        <div id="socChart" class="chart-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 
